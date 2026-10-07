@@ -1,0 +1,341 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "generated": 1791398641000,
+  "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
+  "title": "USGS All Earthquakes, Past Day",
+  "status": 200,
+  "api": "2.7.0",
+  "count": 267
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 1.8,
+    "place": "49 km WNW of Ninilchik, Alaska",
+    "time": 1791397396366,
+    "updated": 1791397520054,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026twsxej",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/aka2026twsxej.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": 0,
+    "sig": 50,
+    "net": "ak",
+    "code": "a2026twsxej",
+    "ids": ",aka2026twsxej,",
+    "sources": ",ak,",
+    "types": ",origin,phase-data,",
+    "nst": 47,
+    "dmin": 0.2,
+    "rms": 0.4,
+    "gap": 64,
+    "magType": "ml",
+    "type": "earthquake",
+    "title": "M 1.8 - 49 km WNW of Ninilchik, Alaska"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -152.444,
+     60.271,
+     103.4
+    ]
+   },
+   "id": "aka2026twsxej"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 0.71,
+    "place": "6 km WNW of Cobb, CA",
+    "time": 1791397338620,
+    "updated": 1791397434262,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/nc75446066",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc75446066.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": 0,
+    "sig": 8,
+    "net": "nc",
+    "code": "75446066",
+    "ids": ",nc75446066,",
+    "sources": ",nc,",
+    "types": ",nearby-cities,origin,phase-data,",
+    "nst": 10,
+    "dmin": 0.004972,
+    "rms": 0.01,
+    "gap": 83,
+    "magType": "md",
+    "type": "earthquake",
+    "title": "M 0.7 - 6 km WNW of Cobb, CA"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.793998718262,
+     38.8343315124512,
+     2.20000004768372
+    ]
+   },
+   "id": "nc75446066"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 0.93,
+    "place": "8 km W of Cobb, CA",
+    "time": 1791397210100,
+    "updated": 1791397309291,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/nc75446061",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc75446061.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": 0,
+    "sig": 13,
+    "net": "nc",
+    "code": "75446061",
+    "ids": ",nc75446061,",
+    "sources": ",nc,",
+    "types": ",nearby-cities,origin,phase-data,",
+    "nst": 13,
+    "dmin": 0.0119,
+    "rms": 0.02,
+    "gap": 58,
+    "magType": "md",
+    "type": "earthquake",
+    "title": "M 0.9 - 8 km W of Cobb, CA"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.815002441406,
+     38.8346672058105,
+     1.67999994754791
+    ]
+   },
+   "id": "nc75446061"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 4.6,
+    "place": "south of the Fiji Islands",
+    "time": 1791396793966,
+    "updated": 1791397982040,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0tl",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/us6000u0tl.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "reviewed",
+    "tsunami": 0,
+    "sig": 326,
+    "net": "us",
+    "code": "6000u0tl",
+    "ids": ",us6000u0tl,",
+    "sources": ",us,",
+    "types": ",origin,phase-data,",
+    "nst": 64,
+    "dmin": 4.852,
+    "rms": 0.78,
+    "gap": 85,
+    "magType": "mb",
+    "type": "earthquake",
+    "title": "M 4.6 - south of the Fiji Islands"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     179.8762,
+     -24.7869,
+     504.432
+    ]
+   },
+   "id": "us6000u0tl"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 1.7,
+    "place": "92 km SE of Kokhanok, Alaska",
+    "time": 1791395467960,
+    "updated": 1791395549218,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026twrvhm",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/aka2026twrvhm.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": 0,
+    "sig": 44,
+    "net": "ak",
+    "code": "a2026twrvhm",
+    "ids": ",aka2026twrvhm,",
+    "sources": ",ak,",
+    "types": ",origin,phase-data,",
+    "nst": 34,
+    "dmin": 0.1,
+    "rms": 0.5,
+    "gap": 82,
+    "magType": "ml",
+    "type": "earthquake",
+    "title": "M 1.7 - 92 km SE of Kokhanok, Alaska"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -153.726,
+     58.808,
+     82.4
+    ]
+   },
+   "id": "aka2026twrvhm"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 3.3,
+    "place": "22 km SW of Hope, Alaska",
+    "time": 1791395115499,
+    "updated": 1791397251969,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026twrpqs",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/aka2026twrpqs.geojson",
+    "felt": 9,
+    "cdi": 3.1,
+    "mmi": null,
+    "alert": null,
+    "status": "reviewed",
+    "tsunami": 0,
+    "sig": 170,
+    "net": "ak",
+    "code": "a2026twrpqs",
+    "ids": ",aka2026twrpqs,",
+    "sources": ",ak,",
+    "types": ",dyfi,origin,phase-data,",
+    "nst": 153,
+    "dmin": 0.3,
+    "rms": 0.9,
+    "gap": 41,
+    "magType": "ml",
+    "type": "earthquake",
+    "title": "M 3.3 - 22 km SW of Hope, Alaska"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -149.933,
+     60.773,
+     22.9
+    ]
+   },
+   "id": "aka2026twrpqs"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 3.6,
+    "place": "10 km SW of Coyanosa, Texas",
+    "time": 1791393428236,
+    "updated": 1791395625803,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/tx2026ttlzei",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/tx2026ttlzei.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": 3.622,
+    "alert": null,
+    "status": "reviewed",
+    "tsunami": 0,
+    "sig": 199,
+    "net": "tx",
+    "code": "2026ttlzei",
+    "ids": ",us6000u0tb,tx2026ttlzei,",
+    "sources": ",us,tx,",
+    "types": ",origin,phase-data,shakemap,",
+    "nst": 38,
+    "dmin": 0,
+    "rms": 0.3,
+    "gap": 67,
+    "magType": "ml",
+    "type": "earthquake",
+    "title": "M 3.6 - 10 km SW of Coyanosa, Texas"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.137,
+     31.171,
+     2.511
+    ]
+   },
+   "id": "tx2026ttlzei"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 1.6,
+    "place": "64 km E of Denali Park, Alaska",
+    "time": 1791393281664,
+    "updated": 1791393398985,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026twqpse",
+    "detail": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/aka2026twqpse.geojson",
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": 0,
+    "sig": 39,
+    "net": "ak",
+    "code": "a2026twqpse",
+    "ids": ",aka2026twqpse,",
+    "sources": ",ak,",
+    "types": ",origin,phase-data,",
+    "nst": 20,
+    "dmin": 0.6,
+    "rms": 0.7,
+    "gap": 84,
+    "magType": "ml",
+    "type": "earthquake",
+    "title": "M 1.6 - 64 km E of Denali Park, Alaska"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -147.626,
+     63.816,
+     0.1
+    ]
+   },
+   "id": "aka2026twqpse"
+  }
+ ],
+ "bbox": [
+  -177.6188,
+  -55.6737,
+  -2.21,
+  179.8762,
+  68.92,
+  563.47
+ ]
+}
