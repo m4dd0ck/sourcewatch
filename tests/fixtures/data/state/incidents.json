@@ -1,0 +1,25 @@
+{
+ "next_id": 3,
+ "incidents": [
+  {
+   "id": 1,
+   "source_id": "nyc-311",
+   "check": "availability",
+   "opened_at": "2026-09-09T11:06:41Z",
+   "resolved_at": "2026-09-11T11:12:41Z",
+   "first_message": "HTTP 503 after 3 attempts: GET returned HTTP 503",
+   "last_message": "resolved: HTTP 200 in 265 ms",
+   "runs": 2
+  },
+  {
+   "id": 2,
+   "source_id": "cfpb-complaints",
+   "check": "schema",
+   "opened_at": "2026-09-29T11:05:41Z",
+   "resolved_at": null,
+   "first_message": "schema changed: +complaint_what_happened_redacted",
+   "last_message": "schema changed: +complaint_what_happened_redacted",
+   "runs": 9
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{% extends "base.html.j2" %}
+{% set here = 'about' %}
+{% set root = '' %}
+{% block title %}How it works · sourcewatch{% endblock %}
+{% block body %}
+<h1>How it works</h1>
+<p class="sub">sourcewatch is a status page for public datasets. A GitHub Actions job runs every morning at 11:00 UTC, probes each source, and publishes this site.</p>
+
+<h2>What a run does</h2>
+<p>For every source it makes at most a handful of HTTP requests ({{ budget }} across all {{ sources | length }} sources), then grades five things:</p>
+<table>
+  <tr><th>Check</th><th>Question</th><th>Statuses</th></tr>
+  <tr><td><code>availability</code></td><td>Did the source answer? (3 attempts with backoff)</td><td>ok, failed</td></tr>
+  <tr><td><code>freshness</code></td><td>Is the newest record as recent as this source's own cadence promises? Daily sources are measured against yesterday in their timezone, business-day sources skip weekends and US federal holidays, monthly files are measured in days after month end, feeds in hours.</td><td>ok, degraded, failed</td></tr>
+  <tr><td><code>volume</code></td><td>Is today's count inside a band around the rolling median of this source's recent history (same weekday where that matters)? New sources show "learning" until enough days exist.</td><td>ok, degraded, failed when zero</td></tr>
+  <tr><td><code>schema</code></td><td>Do the field names and types match the last accepted schema? A change shows the diff until a human accepts it.</td><td>ok, degraded</td></tr>
+  <tr><td><code>values:*</code></td><td>Observatory checks on a small sample: allowed values, nulls, plausible ranges.</td><td>ok, degraded</td></tr>
+</table>
+
+<h2>What "unknown" means</h2>
+<p>The source could not be observed on that run, usually an HTTP error or a timeout. Unknown is not failure: a 403 from a CDN on one morning says nothing about the data. It becomes an incident only if it repeats.</p>
+
+<h2>Sources</h2>
+<table>
+  <tr><th>Source</th><th>Cadence</th><th>Requests per run</th><th>How it is probed</th></tr>
+  {% for s in sources %}
+  <tr><td><a href="sources/{{ s.id }}.html">{{ s.name }}</a></td><td><code>{{ s.cadence.kind }}</code> ({{ s.cadence.tz }})</td><td class="num">{{ s.request_budget }}</td><td class="small">{{ s.description }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>What is stored</h2>
+<p>Only observations: check outcomes, counts, newest timestamps, schema fingerprints and HTTP details. Never rows from a source. The history lives on the <a href="https://github.com/m4dd0ck/sourcewatch/tree/data">data branch</a> of the repository as one small Parquet file per day; this site is rebuilt from it after every run. <a href="status.json">status.json</a> and <a href="history.json">history.json</a> carry the same information for machines.</p>
+
+<h2>Limitations</h2>
+<ul>
+  <li>One run a day, scheduled on shared GitHub runners: a run can start late or be skipped. A day with no run is grey, not red.</li>
+  <li>Volume bands are statistical, not semantic. A holiday can look like an outage for a day.</li>
+  <li>Samples are 200 rows or fewer, so value checks catch new labels and gross nulls, not rare ones.</li>
+  <li>Freshness thresholds are the author's judgement from observing each source; they are in the repository's <code>sources/*.yaml</code> and easy to argue with.</li>
+</ul>
+{% endblock %}

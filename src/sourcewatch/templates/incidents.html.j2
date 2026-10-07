@@ -1,0 +1,22 @@
+{% extends "base.html.j2" %}
+{% set here = 'incidents' %}
+{% set root = '' %}
+{% block title %}Incidents · sourcewatch{% endblock %}
+{% block body %}
+<h1>Incidents</h1>
+<p class="sub">An incident opens when a source fails on two consecutive runs (immediately for a failed freshness check or a schema change) and closes on its own when the source passes again.</p>
+{% if incidents %}
+{% for i in incidents %}
+<div class="card incident {{ 'resolved' if not i.is_open }}">
+  <div class="row">
+    <strong>#{{ i.id }} <a href="sources/{{ i.source_id }}.html">{{ i.source_id }}</a> · <code>{{ i.check }}</code></strong>
+    <span class="muted small">opened {{ i.opened_at.strftime('%Y-%m-%d %H:%M UTC') }}{% if i.resolved_at %} · resolved {{ i.resolved_at.strftime('%Y-%m-%d %H:%M UTC') }}{% else %} · <strong>open</strong>, seen on {{ i.runs }} run{{ 's' if i.runs != 1 }}{% endif %}</span>
+  </div>
+  <div class="small">{{ i.first_message }}</div>
+  {% if i.last_message != i.first_message %}<div class="small muted">{{ i.last_message }}</div>{% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p class="muted">No incidents recorded yet.</p>
+{% endif %}
+{% endblock %}

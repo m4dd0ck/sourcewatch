@@ -1,0 +1,27 @@
+{% extends "base.html.j2" %}
+{% set here = 'index' %}
+{% set root = '' %}
+{% block title %}sourcewatch · {{ line }}{% endblock %}
+{% block body %}
+<h1>Public dataset status</h1>
+<p class="sub">Daily checks on availability, freshness, volume and schema for open data sources analysts rely on.
+{% if last_run %}Last run {{ last_run.run_at.strftime('%Y-%m-%d %H:%M UTC') }}.{% endif %}</p>
+
+<div class="banner {{ overall.value }}"><span class="pill {{ overall.value }}">{{ overall.value }}</span> {{ line }}</div>
+
+{% for page in pages %}
+<div class="card">
+  <div class="row">
+    <a class="name" href="sources/{{ page.source.id }}.html">{{ page.source.name }}</a>
+    <span class="pill {{ page.status.value }}">{{ page.status.value }}</span>
+  </div>
+  <div class="detail">{{ page.detail }}</div>
+  {{ page.strip | safe }}
+  <div class="strip-meta">
+    <span>{{ page.day_statuses[0][0].isoformat() }}</span>
+    <span>{% if page.uptime_pct is not none %}{{ '%.1f' % page.uptime_pct }}% of observed days healthy{% else %}no observations yet{% endif %}</span>
+    <span>{{ page.day_statuses[-1][0].isoformat() }}</span>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

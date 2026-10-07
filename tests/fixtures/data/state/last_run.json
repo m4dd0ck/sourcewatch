@@ -1,0 +1,32 @@
+{
+ "run_id": "fixture089",
+ "run_at": "2026-10-07T11:02:41Z",
+ "overall": "degraded",
+ "line": "1 source degraded",
+ "sources": {
+  "cfpb-complaints": {
+   "status": "degraded",
+   "detail": "newest record, 1 days behind (ok within 2)"
+  },
+  "nyc-311": {
+   "status": "ok",
+   "detail": "newest record, 1 days behind (ok within 2)"
+  },
+  "nyc-tlc": {
+   "status": "ok",
+   "detail": "newest month, 29 days after month end (ok within 45)"
+  },
+  "open-meteo-archive": {
+   "status": "ok",
+   "detail": "newest record, 1 days behind (ok within 2)"
+  },
+  "treasury-dts": {
+   "status": "ok",
+   "detail": "newest record, 1 days behind (ok within 2)"
+  },
+  "usgs-earthquakes": {
+   "status": "ok",
+   "detail": "newest event 0.6 h ago (ok within 6 h)"
+  }
+ }
+}
