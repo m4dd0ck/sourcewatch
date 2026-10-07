@@ -1,0 +1,32 @@
+{
+ "run_id": "ac529012b4c140ce8546d4a514383b56",
+ "run_at": "2026-10-07T22:17:03.294783Z",
+ "overall": "ok",
+ "line": "All 6 sources healthy",
+ "sources": {
+  "cfpb-complaints": {
+   "status": "ok",
+   "detail": "latest 2026-10-07, 8,752 received on 2026-10-05"
+  },
+  "nyc-311": {
+   "status": "ok",
+   "detail": "latest 2026-10-06 02:05 EDT, 11,481 on 2026-10-05"
+  },
+  "nyc-tlc": {
+   "status": "ok",
+   "detail": "yellow 2026-08 published 2026-10-01"
+  },
+  "open-meteo-archive": {
+   "status": "ok",
+   "detail": "archive through 2026-10-07, 24 hourly rows on 2026-10-06"
+  },
+  "treasury-dts": {
+   "status": "ok",
+   "detail": "DTS record_date 2026-10-06 (Tue), 4 rows"
+  },
+  "usgs-earthquakes": {
+   "status": "ok",
+   "detail": "newest event 1 min ago, 24h count 243"
+  }
+ }
+}
