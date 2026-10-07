@@ -1,0 +1,198 @@
+{
+  "fields": [
+    {
+      "name": "unique_key",
+      "dtype": "text"
+    },
+    {
+      "name": "created_date",
+      "dtype": "calendar_date"
+    },
+    {
+      "name": "closed_date",
+      "dtype": "calendar_date"
+    },
+    {
+      "name": "agency",
+      "dtype": "text"
+    },
+    {
+      "name": "agency_name",
+      "dtype": "text"
+    },
+    {
+      "name": "complaint_type",
+      "dtype": "text"
+    },
+    {
+      "name": "descriptor",
+      "dtype": "text"
+    },
+    {
+      "name": "descriptor_2",
+      "dtype": "text"
+    },
+    {
+      "name": "location_type",
+      "dtype": "text"
+    },
+    {
+      "name": "incident_zip",
+      "dtype": "text"
+    },
+    {
+      "name": "incident_address",
+      "dtype": "text"
+    },
+    {
+      "name": "street_name",
+      "dtype": "text"
+    },
+    {
+      "name": "cross_street_1",
+      "dtype": "text"
+    },
+    {
+      "name": "cross_street_2",
+      "dtype": "text"
+    },
+    {
+      "name": "intersection_street_1",
+      "dtype": "text"
+    },
+    {
+      "name": "intersection_street_2",
+      "dtype": "text"
+    },
+    {
+      "name": "address_type",
+      "dtype": "text"
+    },
+    {
+      "name": "city",
+      "dtype": "text"
+    },
+    {
+      "name": "landmark",
+      "dtype": "text"
+    },
+    {
+      "name": "facility_type",
+      "dtype": "text"
+    },
+    {
+      "name": "status",
+      "dtype": "text"
+    },
+    {
+      "name": "due_date",
+      "dtype": "calendar_date"
+    },
+    {
+      "name": "resolution_description",
+      "dtype": "text"
+    },
+    {
+      "name": "resolution_action_updated_date",
+      "dtype": "calendar_date"
+    },
+    {
+      "name": "community_board",
+      "dtype": "text"
+    },
+    {
+      "name": "council_district",
+      "dtype": "text"
+    },
+    {
+      "name": "police_precinct",
+      "dtype": "text"
+    },
+    {
+      "name": "bbl",
+      "dtype": "text"
+    },
+    {
+      "name": "borough",
+      "dtype": "text"
+    },
+    {
+      "name": "x_coordinate_state_plane",
+      "dtype": "number"
+    },
+    {
+      "name": "y_coordinate_state_plane",
+      "dtype": "number"
+    },
+    {
+      "name": "open_data_channel_type",
+      "dtype": "text"
+    },
+    {
+      "name": "park_facility_name",
+      "dtype": "text"
+    },
+    {
+      "name": "park_borough",
+      "dtype": "text"
+    },
+    {
+      "name": "vehicle_type",
+      "dtype": "text"
+    },
+    {
+      "name": "taxi_company_borough",
+      "dtype": "text"
+    },
+    {
+      "name": "taxi_pick_up_location",
+      "dtype": "text"
+    },
+    {
+      "name": "bridge_highway_name",
+      "dtype": "text"
+    },
+    {
+      "name": "bridge_highway_direction",
+      "dtype": "text"
+    },
+    {
+      "name": "road_ramp",
+      "dtype": "text"
+    },
+    {
+      "name": "bridge_highway_segment",
+      "dtype": "text"
+    },
+    {
+      "name": "latitude",
+      "dtype": "number"
+    },
+    {
+      "name": "longitude",
+      "dtype": "number"
+    },
+    {
+      "name": "location",
+      "dtype": "point"
+    },
+    {
+      "name": ":@computed_region_f5dn_yrer",
+      "dtype": "number"
+    },
+    {
+      "name": ":@computed_region_yeji_bk3q",
+      "dtype": "number"
+    },
+    {
+      "name": ":@computed_region_sbqj_enih",
+      "dtype": "number"
+    },
+    {
+      "name": ":@computed_region_92fq_4b7q",
+      "dtype": "number"
+    }
+  ],
+  "accepted_at": "2026-10-07T18:58:50.204247Z",
+  "fingerprint": "995a40c4b150111d"
+}

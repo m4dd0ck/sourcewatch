@@ -1,0 +1,122 @@
+{
+  "fields": [
+    {
+      "name": "mag",
+      "dtype": "number"
+    },
+    {
+      "name": "place",
+      "dtype": "string"
+    },
+    {
+      "name": "time",
+      "dtype": "number"
+    },
+    {
+      "name": "updated",
+      "dtype": "number"
+    },
+    {
+      "name": "tz",
+      "dtype": "null"
+    },
+    {
+      "name": "url",
+      "dtype": "string"
+    },
+    {
+      "name": "detail",
+      "dtype": "string"
+    },
+    {
+      "name": "felt",
+      "dtype": "number"
+    },
+    {
+      "name": "cdi",
+      "dtype": "number"
+    },
+    {
+      "name": "mmi",
+      "dtype": "number"
+    },
+    {
+      "name": "alert",
+      "dtype": "null"
+    },
+    {
+      "name": "status",
+      "dtype": "string"
+    },
+    {
+      "name": "tsunami",
+      "dtype": "number"
+    },
+    {
+      "name": "sig",
+      "dtype": "number"
+    },
+    {
+      "name": "net",
+      "dtype": "string"
+    },
+    {
+      "name": "code",
+      "dtype": "string"
+    },
+    {
+      "name": "ids",
+      "dtype": "string"
+    },
+    {
+      "name": "sources",
+      "dtype": "string"
+    },
+    {
+      "name": "types",
+      "dtype": "string"
+    },
+    {
+      "name": "nst",
+      "dtype": "number"
+    },
+    {
+      "name": "dmin",
+      "dtype": "number"
+    },
+    {
+      "name": "rms",
+      "dtype": "number"
+    },
+    {
+      "name": "gap",
+      "dtype": "number"
+    },
+    {
+      "name": "magType",
+      "dtype": "string"
+    },
+    {
+      "name": "type",
+      "dtype": "string"
+    },
+    {
+      "name": "title",
+      "dtype": "string"
+    },
+    {
+      "name": "longitude",
+      "dtype": "number"
+    },
+    {
+      "name": "latitude",
+      "dtype": "number"
+    },
+    {
+      "name": "depth_km",
+      "dtype": "number"
+    }
+  ],
+  "accepted_at": "2026-10-07T19:01:13.723734Z",
+  "fingerprint": "e5cf4300c0490409"
+}

@@ -1,0 +1,90 @@
+{
+  "fields": [
+    {
+      "name": "VendorID",
+      "dtype": "INT32"
+    },
+    {
+      "name": "tpep_pickup_datetime",
+      "dtype": "TIMESTAMP_MICROS"
+    },
+    {
+      "name": "tpep_dropoff_datetime",
+      "dtype": "TIMESTAMP_MICROS"
+    },
+    {
+      "name": "passenger_count",
+      "dtype": "INT64"
+    },
+    {
+      "name": "trip_distance",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "RatecodeID",
+      "dtype": "INT64"
+    },
+    {
+      "name": "store_and_fwd_flag",
+      "dtype": "UTF8"
+    },
+    {
+      "name": "PULocationID",
+      "dtype": "INT32"
+    },
+    {
+      "name": "DOLocationID",
+      "dtype": "INT32"
+    },
+    {
+      "name": "payment_type",
+      "dtype": "INT64"
+    },
+    {
+      "name": "fare_amount",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "extra",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "mta_tax",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "tip_amount",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "tolls_amount",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "improvement_surcharge",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "total_amount",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "congestion_surcharge",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "Airport_fee",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "cbd_congestion_fee",
+      "dtype": "DOUBLE"
+    },
+    {
+      "name": "request_source",
+      "dtype": "UTF8"
+    }
+  ],
+  "accepted_at": "2026-10-07T18:58:50.543383Z",
+  "fingerprint": "ed708b67cb9ec410"
+}

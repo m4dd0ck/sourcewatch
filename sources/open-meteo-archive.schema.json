@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "name": "time",
+      "dtype": "string"
+    },
+    {
+      "name": "temperature_2m_max",
+      "dtype": "number"
+    },
+    {
+      "name": "temperature_2m_min",
+      "dtype": "number"
+    },
+    {
+      "name": "precipitation_sum",
+      "dtype": "number"
+    }
+  ],
+  "accepted_at": "2026-10-07T19:01:14.075121Z",
+  "fingerprint": "3441758a83899cc3"
+}

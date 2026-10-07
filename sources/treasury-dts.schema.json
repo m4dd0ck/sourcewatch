@@ -1,0 +1,70 @@
+{
+  "fields": [
+    {
+      "name": "record_date",
+      "dtype": "DATE"
+    },
+    {
+      "name": "account_type",
+      "dtype": "STRING"
+    },
+    {
+      "name": "close_today_bal",
+      "dtype": "CURRENCY0"
+    },
+    {
+      "name": "open_today_bal",
+      "dtype": "CURRENCY0"
+    },
+    {
+      "name": "open_month_bal",
+      "dtype": "CURRENCY0"
+    },
+    {
+      "name": "open_fiscal_year_bal",
+      "dtype": "CURRENCY0"
+    },
+    {
+      "name": "table_nbr",
+      "dtype": "STRING"
+    },
+    {
+      "name": "table_nm",
+      "dtype": "STRING"
+    },
+    {
+      "name": "sub_table_name",
+      "dtype": "STRING"
+    },
+    {
+      "name": "src_line_nbr",
+      "dtype": "INTEGER"
+    },
+    {
+      "name": "record_fiscal_year",
+      "dtype": "YEAR"
+    },
+    {
+      "name": "record_fiscal_quarter",
+      "dtype": "QUARTER"
+    },
+    {
+      "name": "record_calendar_year",
+      "dtype": "YEAR"
+    },
+    {
+      "name": "record_calendar_quarter",
+      "dtype": "QUARTER"
+    },
+    {
+      "name": "record_calendar_month",
+      "dtype": "MONTH"
+    },
+    {
+      "name": "record_calendar_day",
+      "dtype": "DAY"
+    }
+  ],
+  "accepted_at": "2026-10-07T18:58:51.239520Z",
+  "fingerprint": "195afa733033ad41"
+}

@@ -1,0 +1,66 @@
+{
+  "fields": [
+    {
+      "name": "product",
+      "dtype": "string"
+    },
+    {
+      "name": "date_sent_to_company",
+      "dtype": "string"
+    },
+    {
+      "name": "issue",
+      "dtype": "string"
+    },
+    {
+      "name": "sub_product",
+      "dtype": "string"
+    },
+    {
+      "name": "zip_code",
+      "dtype": "string"
+    },
+    {
+      "name": "tags",
+      "dtype": "string"
+    },
+    {
+      "name": "complaint_id",
+      "dtype": "string"
+    },
+    {
+      "name": "timely",
+      "dtype": "string"
+    },
+    {
+      "name": "company_response",
+      "dtype": "string"
+    },
+    {
+      "name": "submitted_via",
+      "dtype": "string"
+    },
+    {
+      "name": "company",
+      "dtype": "string"
+    },
+    {
+      "name": "date_received",
+      "dtype": "string"
+    },
+    {
+      "name": "state",
+      "dtype": "string"
+    },
+    {
+      "name": "company_public_response",
+      "dtype": "null"
+    },
+    {
+      "name": "sub_issue",
+      "dtype": "string"
+    }
+  ],
+  "accepted_at": "2026-10-07T19:01:13.371923Z",
+  "fingerprint": "47fb91c222355ba7"
+}
