@@ -1,0 +1,315 @@
+{
+ "took": 7039,
+ "timed_out": false,
+ "_shards": {
+  "total": 5,
+  "successful": 5,
+  "skipped": 0,
+  "failed": 0
+ },
+ "hits": {
+  "total": {
+   "value": 18239728,
+   "relation": "eq"
+  },
+  "max_score": null,
+  "hits": [
+   {
+    "_index": "complaint-public-v1",
+    "_id": "29300014",
+    "_score": null,
+    "_source": {
+     "product": "Credit reporting or other personal consumer reports",
+     "date_sent_to_company": "2026-10-07T03:59:06.000Z",
+     "issue": "Incorrect information on your report",
+     "sub_product": "Credit reporting",
+     "zip_code": "60411",
+     "tags": null,
+     "complaint_id": "29300014",
+     "timely": "Yes",
+     "company_response": "In progress",
+     "submitted_via": "Web",
+     "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+     "date_received": "2026-10-07T03:58:44.000Z",
+     "state": "IL",
+     "company_public_response": null,
+     "sub_issue": "Information belongs to someone else"
+    },
+    "sort": [
+     1791345524000,
+     "29300014"
+    ]
+   },
+   {
+    "_index": "complaint-public-v1",
+    "_id": "29300008",
+    "_score": null,
+    "_source": {
+     "product": "Credit reporting or other personal consumer reports",
+     "date_sent_to_company": "2026-10-07T03:58:41.000Z",
+     "issue": "Improper use of your report",
+     "sub_product": "Credit reporting",
+     "zip_code": "33881",
+     "tags": null,
+     "complaint_id": "29300008",
+     "timely": "Yes",
+     "company_response": "In progress",
+     "submitted_via": "Web",
+     "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+     "date_received": "2026-10-07T03:58:19.000Z",
+     "state": "FL",
+     "company_public_response": null,
+     "sub_issue": "Reporting company used your report improperly"
+    },
+    "sort": [
+     1791345499000,
+     "29300008"
+    ]
+   },
+   {
+    "_index": "complaint-public-v1",
+    "_id": "29300007",
+    "_score": null,
+    "_source": {
+     "product": "Credit reporting or other personal consumer reports",
+     "date_sent_to_company": "2026-10-07T03:58:44.000Z",
+     "issue": "Incorrect information on your report",
+     "sub_product": "Credit reporting",
+     "zip_code": "21215",
+     "tags": null,
+     "complaint_id": "29300007",
+     "timely": "Yes",
+     "company_response": "In progress",
+     "submitted_via": "Web",
+     "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+     "date_received": "2026-10-07T03:58:18.000Z",
+     "state": "MD",
+     "company_public_response": null,
+     "sub_issue": "Information belongs to someone else"
+    },
+    "sort": [
+     1791345498000,
+     "29300007"
+    ]
+   },
+   {
+    "_index": "complaint-public-v1",
+    "_id": "29299989",
+    "_score": null,
+    "_source": {
+     "product": "Credit reporting or other personal consumer reports",
+     "date_sent_to_company": "2026-10-07T03:57:58.000Z",
+     "issue": "Incorrect information on your report",
+     "sub_product": "Credit reporting",
+     "zip_code": "30309",
+     "tags": null,
+     "complaint_id": "29299989",
+     "timely": "Yes",
+     "company_response": "In progress",
+     "submitted_via": "Web",
+     "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+     "date_received": "2026-10-07T03:57:35.000Z",
+     "state": "GA",
+     "company_public_response": null,
+     "sub_issue": "Account status incorrect"
+    },
+    "sort": [
+     1791345455000,
+     "29299989"
+    ]
+   },
+   {
+    "_index": "complaint-public-v1",
+    "_id": "29299986",
+    "_score": null,
+    "_source": {
+     "product": "Credit reporting or other personal consumer reports",
+     "date_sent_to_company": "2026-10-07T03:57:47.000Z",
+     "issue": "Incorrect information on your report",
+     "sub_product": "Credit reporting",
+     "zip_code": "77434",
+     "tags": null,
+     "complaint_id": "29299986",
+     "timely": "Yes",
+     "company_response": "In progress",
+     "submitted_via": "Web",
+     "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+     "date_received": "2026-10-07T03:57:24.000Z",
+     "state": "TX",
+     "company_public_response": null,
+     "sub_issue": "Information belongs to someone else"
+    },
+    "sort": [
+     1791345444000,
+     "29299986"
+    ]
+   }
+  ]
+ },
+ "_meta": {
+  "license": "CC0",
+  "last_updated": "2026-10-07T12:00:00-05:00",
+  "last_indexed": "2026-10-07T12:00:00-05:00",
+  "total_record_count": 18239728,
+  "is_data_stale": false,
+  "has_data_issue": false,
+  "break_points": {
+   "2": [
+    1791345444000,
+    "29299986"
+   ],
+   "3": [
+    1791345403000,
+    "29300005"
+   ],
+   "4": [
+    1791345304000,
+    "29299738"
+   ],
+   "5": [
+    1791345260000,
+    "29299511"
+   ],
+   "6": [
+    1791345162000,
+    "29299141"
+   ],
+   "7": [
+    1791345115000,
+    "29299499"
+   ],
+   "8": [
+    1791345032000,
+    "29299138"
+   ],
+   "9": [
+    1791344994000,
+    "29299137"
+   ],
+   "10": [
+    1791344943000,
+    "29298881"
+   ],
+   "11": [
+    1791344845000,
+    "29298803"
+   ],
+   "12": [
+    1791344772000,
+    "29298749"
+   ],
+   "13": [
+    1791344750000,
+    "29298946"
+   ],
+   "14": [
+    1791344731000,
+    "29298722"
+   ],
+   "15": [
+    1791344685000,
+    "29298884"
+   ],
+   "16": [
+    1791344620000,
+    "29298711"
+   ],
+   "17": [
+    1791344574000,
+    "29298724"
+   ],
+   "18": [
+    1791344524000,
+    "29298559"
+   ],
+   "19": [
+    1791344436000,
+    "29298483"
+   ],
+   "20": [
+    1791344398000,
+    "29298451"
+   ],
+   "21": [
+    1791344247000,
+    "29299505"
+   ],
+   "22": [
+    1791344166000,
+    "29298365"
+   ],
+   "23": [
+    1791344093000,
+    "29298329"
+   ],
+   "24": [
+    1791344010000,
+    "29298297"
+   ],
+   "25": [
+    1791343936000,
+    "29298264"
+   ],
+   "26": [
+    1791343853000,
+    "29298623"
+   ],
+   "27": [
+    1791343800000,
+    "29298244"
+   ],
+   "28": [
+    1791343756000,
+    "29298182"
+   ],
+   "29": [
+    1791343685000,
+    "29298161"
+   ],
+   "30": [
+    1791343651000,
+    "29298146"
+   ],
+   "31": [
+    1791343557000,
+    "29298292"
+   ],
+   "32": [
+    1791343535000,
+    "29297907"
+   ],
+   "33": [
+    1791343483000,
+    "29298217"
+   ],
+   "34": [
+    1791343427000,
+    "29298208"
+   ],
+   "35": [
+    1791343386000,
+    "29297321"
+   ],
+   "36": [
+    1791343332000,
+    "29297902"
+   ],
+   "37": [
+    1791343279000,
+    "29297673"
+   ],
+   "38": [
+    1791343230000,
+    "29297096"
+   ],
+   "39": [
+    1791343174000,
+    "29297468"
+   ],
+   "40": [
+    1791343114000,
+    "29296960"
+   ]
+  }
+ }
+}
