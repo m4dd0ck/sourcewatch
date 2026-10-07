@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run mypy
+
+      - name: Tests
+        run: uv run pytest
+
+      - name: Validate source definitions
+        run: uv run sourcewatch validate-config
+
+      # The renderer is proven on the committed 90-day fixture history; CI never touches a source.
+      - name: Render the fixture site
+        run: uv run sourcewatch site --data-dir tests/fixtures/data --out site --at 2026-10-07T11:03:41Z
