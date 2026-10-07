@@ -1,0 +1,62 @@
+[project]
+name = "sourcewatch"
+version = "0.1.0"
+description = "A status page for public datasets: daily checks on availability, freshness, volume and schema, with the history kept in git"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.4",
+    "holidays>=0.60",
+    "httpx>=0.27",
+    "jinja2>=3.1",
+    "observatory @ git+https://github.com/m4dd0ck/observatory@v0.2.0",
+    "pydantic>=2.9",
+    "pyyaml>=6",
+    "structlog>=24",
+    "typer>=0.12",
+]
+
+[project.scripts]
+sourcewatch = "sourcewatch.cli:app"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13",
+    "pytest>=8",
+    "respx>=0.22",
+    "ruff>=0.8",
+    "types-pyyaml>=6",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not network'"
+markers = ["network: hits the live internet; run with -m network"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["sourcewatch"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["holidays", "holidays.*"]
+ignore_missing_imports = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sourcewatch"]
