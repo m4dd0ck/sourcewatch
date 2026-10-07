@@ -1,0 +1,33 @@
+id: open-meteo-archive
+name: Open-Meteo weather archive
+url: https://open-meteo.com/en/docs/historical-weather-api
+description: >
+  Historical hourly and daily weather for New York from Open-Meteo's archive API. The archive
+  is filled to the present with model data and revised later, so the check is whether the last
+  few days are there and complete (24 hourly rows per day), not whether they are final.
+probe:
+  kind: open_meteo
+  endpoint: https://archive-api.open-meteo.com/v1/archive
+  latitude: 40.71
+  longitude: -74.01
+  tz: America/New_York
+  daily: [temperature_2m_max, temperature_2m_min, precipitation_sum]
+  hourly: [temperature_2m]
+  days: 10
+cadence:
+  kind: daily
+  tz: America/New_York
+  ok_within: {days: 3}
+  fail_after: {days: 7}
+volume:
+  metric: hourly rows on the last complete day
+  band: [0.9, 1.1]
+  min_samples: 3
+table_checks:
+  - name: plausible_daily_max
+    type: range
+    column: temperature_2m_max
+    min: -40
+    max: 50
+    severity: warning
+request_budget: 1

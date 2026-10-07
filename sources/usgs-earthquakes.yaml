@@ -1,0 +1,26 @@
+id: usgs-earthquakes
+name: USGS earthquakes, past day
+url: https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+description: >
+  The USGS "all earthquakes, past day" GeoJSON feed. It is regenerated every minute, so the
+  freshness check is in hours and the volume check compares the rolling 24-hour count against
+  its own recent history rather than against yesterday.
+probe:
+  kind: usgs
+  feed_url: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson
+cadence:
+  kind: continuous
+  tz: UTC
+  ok_within: {hours: 6}
+  fail_after: {hours: 24}
+volume:
+  metric: events in the past 24 hours
+  band: [0.4, 2.5]
+table_checks:
+  - name: plausible_magnitude
+    type: range
+    column: mag
+    min: -2
+    max: 10
+    severity: warning
+request_budget: 1

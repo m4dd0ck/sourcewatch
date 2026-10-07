@@ -1,0 +1,26 @@
+id: nyc-tlc
+name: NYC TLC yellow taxi trips
+url: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+description: >
+  Monthly Parquet files of yellow-cab trips on the TLC's CloudFront bucket. Each run HEADs the
+  newest months to find the latest file, then reads only that file's Parquet footer for its
+  row count and schema. Publication has ranged from 31 to 78 days after month end.
+probe:
+  kind: parquet_remote
+  base_url: https://d37ci6vzurychx.cloudfront.net/trip-data/
+  pattern: "yellow_tripdata_{yyyy}-{mm}.parquet"
+  lookback_months: 4
+  tz: America/New_York
+cadence:
+  kind: monthly
+  tz: America/New_York
+  ok_within: {days: 45}
+  fail_after: {days: 75}
+volume:
+  metric: rows in newest month
+  band: [0.6, 1.6]
+  min_samples: 4
+  window: 12
+schema:
+  severity: warning
+request_budget: 5

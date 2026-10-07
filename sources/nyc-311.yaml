@@ -1,0 +1,37 @@
+id: nyc-311
+name: NYC 311 service requests
+url: https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9
+description: >
+  All 311 requests since 2010 on NYC Open Data (Socrata). Each run reads the dataset's own
+  "rows updated" timestamp, counts the requests created two days ago in New York time (the
+  newest complete day, since the feed lags about a day), and fetches the 200 newest rows for
+  field names and value checks.
+probe:
+  kind: socrata
+  domain: data.cityofnewyork.us
+  dataset_id: erm2-nwe9
+  timestamp_field: created_date
+  tz: America/New_York
+  app_token_env: SOCRATA_APP_TOKEN
+  sample_size: 200
+  count_lag_days: 2
+cadence:
+  kind: daily
+  tz: America/New_York
+  ok_within: {days: 2}
+  fail_after: {days: 4}
+volume:
+  metric: requests created two days ago (ET)
+  band: [0.5, 2.0]
+  weekday_aware: true
+table_checks:
+  - name: borough_known
+    type: allowed_values
+    column: borough
+    allowed_values: [BRONX, BROOKLYN, MANHATTAN, QUEENS, STATEN ISLAND, Unspecified]
+    severity: warning
+  - name: complaint_type_present
+    type: completeness
+    column: complaint_type
+    threshold: 0.0
+request_budget: 3
