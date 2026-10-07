@@ -1,0 +1,31 @@
+id: treasury-dts
+name: Treasury Daily Treasury Statement
+url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/
+description: >
+  The Treasury General Account balances from the Daily Treasury Statement, via the Fiscal Data
+  API. Published the next business day around 16:00 ET, so at the morning run the newest record
+  date is normally two business days back. Federal holidays are allowed for.
+probe:
+  kind: treasury
+  endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance
+  page_size: 50
+cadence:
+  kind: business_days
+  tz: America/New_York
+  ok_within: {days: 2}
+  fail_after: {days: 4}
+volume:
+  metric: rows on newest record date
+  band: [0.5, 2.0]
+  min_samples: 4
+table_checks:
+  - name: account_type_present
+    type: completeness
+    column: account_type
+    threshold: 0.0
+  - name: only_operating_cash_table
+    type: allowed_values
+    column: table_nm
+    allowed_values: [Operating Cash Balance]
+    severity: warning
+request_budget: 1

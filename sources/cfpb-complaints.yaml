@@ -1,0 +1,44 @@
+id: cfpb-complaints
+name: CFPB consumer complaints
+url: https://www.consumerfinance.gov/data-research/consumer-complaints/
+description: >
+  The Consumer Financial Protection Bureau's complaint search API. Each run fetches the newest
+  complaint (for freshness and field names) and the count received two days ago (the newest
+  complete day the API has caught up on). Product labels are checked against the known set,
+  because the Bureau has relabelled products before without notice.
+probe:
+  kind: cfpb
+  endpoint: https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/
+  sample_size: 200
+  count_lag_days: 2
+cadence:
+  kind: daily
+  tz: UTC
+  ok_within: {days: 2}
+  fail_after: {days: 5}
+volume:
+  metric: complaints received per day
+  band: [0.5, 2.0]
+  weekday_aware: true
+table_checks:
+  - name: product_known
+    type: allowed_values
+    column: product
+    severity: warning
+    allowed_values:
+      - Credit reporting or other personal consumer reports
+      - Debt collection
+      - Credit card
+      - Checking or savings account
+      - Mortgage
+      - Money transfer, virtual currency, or money service
+      - Vehicle loan or lease
+      - Student loan
+      - Payday loan, title loan, personal loan, or advance loan
+      - Prepaid card
+      - Debt or credit management
+  - name: company_present
+    type: completeness
+    column: company
+    threshold: 0.01
+request_budget: 2
