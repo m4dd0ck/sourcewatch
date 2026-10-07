@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:">
+<title>{% block title %}sourcewatch{% endblock %}</title>
+<style>
+  :root { --bg: #fbfaf8; --panel: #fff; --text: #1d1d1f; --muted: #6b6b70; --line: #e6e3de;
+    --accent: #2e5e4e; --ok: #2e7d4f; --degraded: #b7791f; --failed: #b3261e; --unknown: #8a8a90;
+    --none: #e6e3de; --band: rgba(46, 125, 79, .12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141415; --panel: #1c1c1e; --text: #ececed; --muted: #a0a0a6; --line: #2e2e31;
+      --accent: #7cc4a8; --ok: #4caf7d; --degraded: #d9a441; --failed: #e5534b; --unknown: #8a8a90;
+      --none: #2e2e31; --band: rgba(76, 175, 125, .16); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  nav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; margin-bottom: 20px; }
+  nav a { color: var(--muted); text-decoration: none; } nav a.here { color: var(--text); font-weight: 600; }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 32px 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 20px; font-size: 13.5px; }
+  .banner { display: flex; align-items: center; gap: 12px; background: var(--panel);
+    border: 1px solid var(--line); border-left: 5px solid var(--unknown); border-radius: 8px;
+    padding: 14px 18px; margin: 16px 0 24px; font-size: 17px; font-weight: 600; }
+  .banner.ok { border-left-color: var(--ok); } .banner.degraded { border-left-color: var(--degraded); }
+  .banner.failed { border-left-color: var(--failed); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; margin: 10px 0; }
+  .card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .card .name { font-weight: 600; text-decoration: none; color: var(--text); }
+  .card .detail { color: var(--muted); font-size: 13px; margin: 4px 0 10px; }
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 999px; color: #fff; background: var(--unknown); }
+  .pill.ok { background: var(--ok); } .pill.degraded { background: var(--degraded); }
+  .pill.failed { background: var(--failed); } .pill.unknown { background: var(--unknown); }
+  .strip { width: 100%; height: 18px; display: block; }
+  .strip rect.ok { fill: var(--ok); } .strip rect.degraded { fill: var(--degraded); }
+  .strip rect.failed { fill: var(--failed); } .strip rect.unknown { fill: var(--unknown); }
+  .strip rect.none { fill: var(--none); }
+  .strip-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 11.5px; margin-top: 4px; }
+  .spark { width: 100%; height: 72px; display: block; }
+  .spark .line { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+  .spark circle.line { fill: var(--accent); }
+  .spark .dot { fill: var(--text); } .spark .band { fill: var(--band); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .03em; }
+  td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  code { font: 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  .muted { color: var(--muted); } .small { font-size: 12.5px; }
+  .diff { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+  .incident { border-left: 4px solid var(--failed); }
+  .incident.resolved { border-left-color: var(--line); }
+  footer { margin-top: 44px; color: var(--muted); font-size: 12.5px; }
+  a { color: var(--accent); }
+  @media (max-width: 560px) { .card .row { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<main>
+  <nav>
+    <a href="{{ root }}index.html" class="{{ 'here' if here == 'index' }}">Status</a>
+    <a href="{{ root }}incidents.html" class="{{ 'here' if here == 'incidents' }}">Incidents{% if open_count %} ({{ open_count }}){% endif %}</a>
+    <a href="{{ root }}about.html" class="{{ 'here' if here == 'about' }}">How it works</a>
+    <a href="{{ root }}status.json">status.json</a>
+    <a href="https://github.com/m4dd0ck/sourcewatch">GitHub</a>
+  </nav>
+  {% block body %}{% endblock %}
+  <footer>
+    Generated {{ generated_at.strftime('%Y-%m-%d %H:%M UTC') }} ({{ generated_at_et.strftime('%H:%M %Z') }})
+    by sourcewatch {{ version }}. Observations only; no source data is stored.
+  </footer>
+</main>
+</body>
+</html>

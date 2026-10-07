@@ -1,0 +1,73 @@
+{% extends "base.html.j2" %}
+{% set here = 'source' %}
+{% set root = '../' %}
+{% block title %}{{ page.source.name }} · sourcewatch{% endblock %}
+{% block body %}
+<h1>{{ page.source.name }} <span class="pill {{ page.status.value }}">{{ page.status.value }}</span></h1>
+<p class="sub">{{ page.source.description }} <a href="{{ page.source.url }}">Source page</a>.</p>
+
+<div class="card">
+  {{ page.strip | safe }}
+  <div class="strip-meta">
+    <span>{{ page.day_statuses[0][0].isoformat() }}</span>
+    <span>{% if page.uptime_pct is not none %}{{ '%.1f' % page.uptime_pct }}% of observed days healthy{% endif %}</span>
+    <span>{{ page.day_statuses[-1][0].isoformat() }}</span>
+  </div>
+</div>
+
+<h2>Latest checks{% if page.last_seen %} <span class="muted small">{{ page.last_seen.strftime('%Y-%m-%d %H:%M UTC') }}</span>{% endif %}</h2>
+{% if page.latest %}
+<table>
+  <tr><th>Check</th><th>Status</th><th>Result</th><th class="num">Value</th></tr>
+  {% for o in page.latest %}
+  <tr>
+    <td><code>{{ o.check }}</code></td>
+    <td><span class="pill {{ effective(o).value }}">{{ effective(o).value }}</span></td>
+    <td>{{ o.message }}</td>
+    <td class="num">{% if o.metric is not none %}{{ '{:,.1f}'.format(o.metric) if o.metric != o.metric|int else '{:,}'.format(o.metric|int) }} {{ o.unit }}{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">No observations yet.</p>
+{% endif %}
+
+<h2>{{ page.source.volume.metric | capitalize }}</h2>
+<div class="card">{{ page.volume_spark | safe }}
+  <div class="muted small">Shaded band: {{ page.source.volume.band[0] }}× to {{ page.source.volume.band[1] }}× the rolling median of the last {{ page.source.volume.window }} observations{% if page.source.volume.weekday_aware %}, same weekday{% endif %}.</div>
+</div>
+
+<h2>Freshness age</h2>
+<div class="card">{{ page.freshness_spark | safe }}
+  <div class="muted small">Cadence <code>{{ page.source.cadence.kind }}</code> in {{ page.source.cadence.tz }}:
+    ok within {{ page.source.cadence.ok_within.total_days if page.source.cadence.kind != 'continuous' else page.source.cadence.ok_within.total_hours }}
+    {{ 'hours' if page.source.cadence.kind == 'continuous' else ('business days' if page.source.cadence.kind == 'business_days' else 'days') }},
+    failed after {{ page.source.cadence.fail_after.total_days if page.source.cadence.kind != 'continuous' else page.source.cadence.fail_after.total_hours }}.</div>
+</div>
+
+<h2>Schema {% if page.schema_accepted %}<span class="muted small">accepted</span>{% else %}<span class="muted small">not yet accepted</span>{% endif %}</h2>
+{% if page.schema_diff %}
+<div class="card"><div class="diff">{% for d in page.schema_diff %}{{ d }}{% if not loop.last %}, {% endif %}{% endfor %}</div></div>
+{% endif %}
+{% if page.schema_fields %}
+<div class="card small">
+  {% for f in page.schema_fields %}<code>{{ f.name }}</code> <span class="muted">{{ f.dtype }}</span>{% if not loop.last %} · {% endif %}{% endfor %}
+</div>
+{% else %}
+<p class="muted">No schema observed.</p>
+{% endif %}
+
+<h2>Incidents</h2>
+{% if page.incidents %}
+{% for i in page.incidents %}
+<div class="card incident {{ 'resolved' if not i.is_open }}">
+  <div class="row"><strong>#{{ i.id }} {{ i.check }}</strong>
+    <span class="muted small">opened {{ i.opened_at.strftime('%Y-%m-%d %H:%M UTC') }}{% if i.resolved_at %} · resolved {{ i.resolved_at.strftime('%Y-%m-%d %H:%M UTC') }}{% else %} · open, {{ i.runs }} run{{ 's' if i.runs != 1 }}{% endif %}</span></div>
+  <div class="small">{{ i.first_message }}</div>
+  {% if i.last_message != i.first_message %}<div class="small muted">{{ i.last_message }}</div>{% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p class="muted">None recorded.</p>
+{% endif %}
+{% endblock %}
