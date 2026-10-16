@@ -41,7 +41,7 @@ Each source is one YAML file under [`sources/`](sources/) with a sidecar `<id>.s
 
 ## How the checks work
 
-- **availability**: three attempts with backoff; a 403 or 5xx on the deciding request marks the source `unknown` for the run, which is not a failure until it repeats.
+- **availability**: three attempts with backoff; a 403, 5xx or no response on the deciding request marks the source `failed` for that run. An availability incident opens only if the next run fails too, so a single bad fetch never raises one.
 - **freshness**: measured against the source's cadence, in its timezone. Daily sources are compared with yesterday, business-day sources skip weekends and holidays, monthly files are measured in days after month end, feeds in hours. Thresholds give `ok`, `degraded`, `failed`.
 - **volume**: today's figure against a band around the rolling median of the last 28 observations, same weekday where that matters. New sources read "learning" until there are enough days; `sourcewatch backfill` seeds the baselines from the source's own history where it exposes one.
 - **schema**: field names and types against the accepted sidecar. A change is `DRIFT` with the diff (`+added, -removed, ~retyped`) until someone runs `sourcewatch accept-schema <id>` and commits the result.
