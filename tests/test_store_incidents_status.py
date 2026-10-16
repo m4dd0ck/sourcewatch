@@ -71,6 +71,24 @@ def test_previous_run_and_volume_samples(data_dir: Path):
     assert store.read_previous_run("r0", day1) == []
 
 
+def test_previous_run_is_the_whole_run(data_dir: Path):
+    # Reason: live history before v0.1.1 stamped each source with its own run_at, so matching
+    # the max timestamp returned only the last-probed source.
+    store = DataStore(data_dir)
+    day1 = RUN_AT - timedelta(days=1)
+    store.write_outcomes(
+        [
+            outcome("a", "availability", Status.OK, run_id="r0", run_at=day1),
+            outcome(
+                "b", "availability", Status.FAILED, run_id="r0", run_at=day1 + timedelta(seconds=30)
+            ),
+        ]
+    )
+    store.write_outcomes([outcome("a", "availability", Status.OK, run_id="r1")])
+    previous = store.read_previous_run("r1", RUN_AT)
+    assert sorted((o.source_id, o.run_id) for o in previous) == [("a", "r0"), ("b", "r0")]
+
+
 def test_state_files_round_trip(data_dir: Path):
     store = DataStore(data_dir)
     assert store.read_incidents() == IncidentBook() and store.read_last_run() is None

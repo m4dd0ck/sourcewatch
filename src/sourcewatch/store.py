@@ -165,8 +165,11 @@ class DataStore:
         recent = [o for o in self.read_history(14, now) if o.run_id != before_run_id]
         if not recent:
             return []
-        latest = max(o.run_at for o in recent)
-        return [o for o in recent if o.run_at == latest]
+        # Reason: before v0.1.1 each source stamped its own run_at, so matching an exact
+        # timestamp collapsed "the previous run" to the last-probed source. Select by run_id;
+        # a tie on run_at (fixed clocks in tests) breaks on run_id for determinism.
+        latest = max(recent, key=lambda o: (o.run_at, o.run_id)).run_id
+        return [o for o in recent if o.run_id == latest]
 
     def volume_samples(self, source_id: str, now: datetime, days: int = 400) -> list[Sample]:
         """Volume values from history plus backfilled baselines, one per day (history wins)."""

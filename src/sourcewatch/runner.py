@@ -174,7 +174,11 @@ def run_all(
         if own_client:
             http_client.close()
 
-    outcomes = [o.model_copy(update={"run_id": run_id}) for r in reports for o in r.outcomes]
+    outcomes = [
+        o.model_copy(update={"run_id": run_id, "run_at": run_at})
+        for r in reports
+        for o in r.outcomes
+    ]
     for source_report, chunk in zip(reports, _chunks(outcomes, reports), strict=True):
         source_report.outcomes = chunk
     written = store.write_outcomes(outcomes)
