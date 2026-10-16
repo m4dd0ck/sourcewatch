@@ -1,6 +1,6 @@
 [project]
 name = "sourcewatch"
-version = "0.1.0"
+version = "0.1.1"
 description = "A status page for public datasets: daily checks on availability, freshness, volume and schema, with the history kept in git"
 readme = "README.md"
 license = "MIT"
