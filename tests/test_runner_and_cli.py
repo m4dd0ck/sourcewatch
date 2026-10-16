@@ -3,14 +3,16 @@ import shutil
 from pathlib import Path
 
 import httpx
+import pytest
 import respx
 from typer.testing import CliRunner
 
+from sourcewatch import runner
 from sourcewatch.checks import fingerprint
 from sourcewatch.cli import app
 from sourcewatch.clock import FixedClock
 from sourcewatch.config import SchemaFile
-from sourcewatch.observation import SchemaField
+from sourcewatch.observation import Observation, SchemaField
 from sourcewatch.runner import format_table, run_all
 from sourcewatch.store import DataStore
 from sourcewatch.types import Status
@@ -102,6 +104,34 @@ def test_full_run_with_one_source_down_and_one_drifted(
         ("nyc-311", "schema"),
         ("nyc-tlc", "availability"),
     ]
+
+
+def test_crashing_probe_does_not_abort_run(
+    mock: respx.MockRouter,
+    client: httpx.Client,
+    clock: FixedClock,
+    data_dir: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    mock_all(mock)
+
+    def boom(*_: object) -> Observation:
+        raise IndexError("list index out of range")
+
+    monkeypatch.setitem(runner.PROBES, "usgs", boom)
+
+    report = run_all(SOURCES_DIR, data_dir, clock, client=client, env={}, sleep=no_sleep)
+
+    assert len(report.reports) == 6
+    assert report.statuses["usgs-earthquakes"] == Status.FAILED
+    usgs = next(r for r in report.reports if r.source.id == "usgs-earthquakes")
+    assert usgs.detail == "IndexError: list index out of range"
+    assert usgs.outcome("freshness") is not None
+    assert usgs.outcome("freshness").status == Status.UNKNOWN
+    history = DataStore(data_dir).read_history(1, RUN_AT)
+    assert len({o.source_id for o in history}) == 6
+    # Every row of a run carries the run-level timestamp, whatever each probe observed.
+    assert {o.run_at for o in history} == {RUN_AT}
 
 
 def test_only_one_source(

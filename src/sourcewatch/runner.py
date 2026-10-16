@@ -99,6 +99,14 @@ def observe(
             unavailable_reason=str(exc),
             http=exc.detail,
         )
+    except Exception as exc:  # Reason: one bad source must not blank the day for the others.
+        log.exception("probe.crashed", source=source.id, error=type(exc).__name__)
+        obs = Observation(
+            source_id=source.id,
+            observed_at=now,
+            available=False,
+            unavailable_reason=f"{type(exc).__name__}: {exc}",
+        )
     log.info(
         "probe.done",
         source=source.id,
