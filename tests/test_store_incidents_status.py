@@ -145,6 +145,23 @@ def test_failed_freshness_and_schema_drift_open_immediately():
     assert [i.check for i in resolved] == ["schema"]
 
 
+def test_unobserved_check_does_not_resolve_incident():
+    book = IncidentBook()
+    stale = [outcome("nyc-311", "freshness", Status.FAILED)]
+    opened, _ = incidents.apply(book, stale, [], RUN_AT)
+    assert [i.check for i in opened] == ["freshness"]
+    # The source goes down: availability fails, freshness is "not observed".
+    outage = [
+        outcome("nyc-311", "availability", Status.FAILED),
+        outcome("nyc-311", "freshness", Status.UNKNOWN),
+    ]
+    opened, resolved = incidents.apply(book, outage, stale, RUN_AT + timedelta(days=1))
+    assert opened == [] and resolved == []
+    still_open = book.open_for(("nyc-311", "freshness"))
+    assert still_open is not None and still_open.runs == 1
+    assert still_open.last_message == "freshness failed"
+
+
 def test_status_roll_up():
     crit_fail = outcome("a", "freshness", Status.FAILED, severity=Severity.CRITICAL)
     warn_fail = outcome("a", "values:x", Status.FAILED, severity=Severity.WARNING)

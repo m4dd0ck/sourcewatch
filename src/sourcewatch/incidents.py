@@ -104,7 +104,9 @@ def apply(
                 book.next_id += 1
                 book.incidents.append(incident)
                 opened.append(incident)
-        elif current is not None:
+        elif current is not None and outcome.status != Status.UNKNOWN:
+            # Reason: a check that could not run says nothing about whether the problem went
+            # away; an outage must not resolve the freshness or volume incident underneath it.
             current.resolved_at = run_at
             current.last_message = f"resolved: {outcome.message}"
             resolved.append(current)
