@@ -2,11 +2,16 @@
 
 A status page for public datasets. Python, DuckDB, httpx, [observatory](https://github.com/m4dd0ck/observatory), GitHub Actions, GitHub Pages.
 
+This file is the reference: what exists and how it works. `RUNBOOK.md` is the procedures,
+`CLAUDE.md` the agent rules, `TASK.md` the open items.
+
+## What it is
+
 Every morning at 11:00 UTC a workflow probes six open data sources that analysts depend on, grades each for availability, freshness against its own cadence, volume against its own history, schema drift and value sanity, appends the observations to a history kept in git, and republishes the site.
 
 **Site:** https://m4dd0ck.github.io/sourcewatch/ · **Machine-readable:** [`status.json`](https://m4dd0ck.github.io/sourcewatch/status.json), [`history.json`](https://m4dd0ck.github.io/sourcewatch/history.json) · **History:** the [`data` branch](https://github.com/m4dd0ck/sourcewatch/tree/data)
 
-## What a run looks like
+### What a run looks like
 
 ```
 $ uv run sourcewatch run --data-dir data
@@ -26,30 +31,11 @@ wrote data/history/2026/10/07.parquet
 
 When something is wrong the cells say so (`FAIL`, `warn`, `DRIFT`, `-` for not observed), the day turns amber or red on the site's 90-day strip, and after two consecutive failing runs an incident opens with the message above. Incidents close themselves when the source passes again.
 
-## Sources
+## Why it exists
 
-| Source | Cadence | Requests per run | Probe |
-|---|---|---|---|
-| [NYC TLC yellow taxi trips](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) | monthly, ok within 45 days of month end | ≤ 5 | HEAD the newest months, then read only the Parquet footer (row count, schema) |
-| [CFPB consumer complaints](https://www.consumerfinance.gov/data-research/consumer-complaints/) | daily (UTC) | 2 | newest complaint and field names; count for the newest complete day |
-| [Treasury Daily Treasury Statement](https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/) | business days (ET), US federal holidays allowed for | 1 | newest record date, rows on it, types from the API's own metadata |
-| [Open-Meteo weather archive](https://open-meteo.com/en/docs/historical-weather-api) | daily (ET) | 1 | last ten days for New York; hourly completeness of the last complete day |
-| [NYC 311 service requests](https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9) | daily (ET) | 3 | dataset "rows updated" time, count for the newest complete day, 200 newest rows |
-| [USGS earthquakes, past day](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) | continuous, ok within 6 hours | 1 | the all-day GeoJSON feed |
+Analysts build on public datasets that go stale, change shape or disappear without anyone announcing it, and the first sign is usually a broken dashboard. Nothing watched these sources the way a status page watches a service. This one does, cheaply (a handful of requests a day, no rows stored) and in public, so the history is a record anyone can check. It is also the owner's capstone: a thing whose value is that it visibly ran every day.
 
-Each source is one YAML file under [`sources/`](sources/) with a sidecar `<id>.schema.json` holding the accepted schema. Thresholds are the author's judgement from watching each source and are easy to argue with in a pull request.
-
-## How the checks work
-
-- **availability**: three attempts with backoff; a 403, 5xx or no response on the deciding request marks the source `failed` for that run. An availability incident opens only if the next run fails too, so a single bad fetch never raises one.
-- **freshness**: measured against the source's cadence, in its timezone. Daily sources are compared with yesterday, business-day sources skip weekends and holidays, monthly files are measured in days after month end, feeds in hours. Thresholds give `ok`, `degraded`, `failed`.
-- **volume**: today's figure against a band around the rolling median of the last 28 observations, same weekday where that matters. New sources read "learning" until there are enough days; `sourcewatch backfill` seeds the baselines from the source's own history where it exposes one.
-- **schema**: field names and types against the accepted sidecar. A change is `DRIFT` with the diff (`+added, -removed, ~retyped`) until someone runs `sourcewatch accept-schema <id>` and commits the result.
-- **values**: [observatory](https://github.com/m4dd0ck/observatory) checks on a sample of at most 200 rows: allowed values, nulls, plausible ranges.
-
-Only observations are stored: outcomes, counts, timestamps, schema fingerprints, HTTP details. Never rows from a source. The TLC probe never downloads a trip file. History grows by a few kilobytes a day.
-
-## Run it yourself
+## Quick start
 
 ```bash
 git clone https://github.com/m4dd0ck/sourcewatch && cd sourcewatch
@@ -62,12 +48,119 @@ uv run sourcewatch accept-schema nyc-tlc          # after a source legitimately 
 
 `SOCRATA_APP_TOKEN` is optional; without it the 311 probe runs anonymously and is throttled per IP, which three requests a day never reaches.
 
-## How it is deployed
+## Commands
+
+All run as `uv run sourcewatch <command>`. The table is regenerated from `sourcewatch --help` by the doc check; edit the help strings in `src/sourcewatch/cli.py`, not this table.
+
+<!-- generated:commands start -->
+<!-- do not hand-edit: regenerated by doc-check --fix -->
+| Command | What it does |
+|---|---|
+| `sourcewatch run` | Probe every source, record the outcomes and print the status table. |
+| `sourcewatch site` | Render the status site and JSON feeds from the data directory. |
+| `sourcewatch backfill` | Fill volume baselines from each source's own history where it exposes one. |
+| `sourcewatch accept-schema` | Write sources/<id>.schema.json from the schema seen on the most recent run. |
+| `sourcewatch sources` | List the monitored sources. |
+| `sourcewatch validate-config` | Check every source definition and accepted schema file. |
+| `sourcewatch version` | Print the version. |
+<!-- generated:commands end -->
+
+`--sources DIR` and `--data-dir DIR` apply to most commands (defaults: `sources/` and `data/`). `run` and `backfill` take `--source <id>` to limit to one source; `backfill --days N` says how far back to ask. `site --out DIR` is where the static site goes and `--at` renders as of a fixed timestamp (used for the fixture site in CI). `--log-level` before the command turns on structured logging.
+
+## How it works
+
+### Sources
+
+| Source | Cadence | Requests per run | Probe |
+|---|---|---|---|
+| [NYC TLC yellow taxi trips](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) | monthly, ok within 45 days of month end | ≤ 5 | HEAD the newest months, then read only the Parquet footer (row count, schema) |
+| [CFPB consumer complaints](https://www.consumerfinance.gov/data-research/consumer-complaints/) | daily (UTC) | 2 | newest complaint and field names; count for the newest complete day |
+| [Treasury Daily Treasury Statement](https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/) | business days (ET), US federal holidays allowed for | 1 | newest record date, rows on it, types from the API's own metadata |
+| [Open-Meteo weather archive](https://open-meteo.com/en/docs/historical-weather-api) | daily (ET) | 1 | last ten days for New York; hourly completeness of the last complete day |
+| [NYC 311 service requests](https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9) | daily (ET) | 3 | dataset "rows updated" time, count for the newest complete day, 200 newest rows |
+| [USGS earthquakes, past day](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) | continuous, ok within 6 hours | 1 | the all-day GeoJSON feed |
+
+Each source is one YAML file under [`sources/`](sources/) with a sidecar `<id>.schema.json` holding the accepted schema. Thresholds are the author's judgement from watching each source and are easy to argue with in a pull request.
+
+### The checks
+
+- **availability**: three attempts with backoff; a 403, 5xx or no response on the deciding request marks the source `failed` for that run. An availability incident opens only if the next run fails too, so a single bad fetch never raises one.
+- **freshness**: measured against the source's cadence, in its timezone. Daily sources are compared with yesterday, business-day sources skip weekends and holidays, monthly files are measured in days after month end, feeds in hours. Thresholds give `ok`, `degraded`, `failed`.
+- **volume**: today's figure against a band around the rolling median of the last 28 observations, same weekday where that matters. New sources read "learning" until there are enough days; `sourcewatch backfill` seeds the baselines from the source's own history where it exposes one.
+- **schema**: field names and types against the accepted sidecar. A change is `DRIFT` with the diff (`+added, -removed, ~retyped`) until someone runs `sourcewatch accept-schema <id>` and commits the result.
+- **values**: [observatory](https://github.com/m4dd0ck/observatory) checks on a sample of at most 200 rows: allowed values, nulls, plausible ranges.
+
+Only observations are stored: outcomes, counts, timestamps, schema fingerprints, HTTP details. Never rows from a source. The TLC probe never downloads a trip file. History grows by a few kilobytes a day.
+
+### How it is deployed
 
 - `.github/workflows/daily.yml` runs on a cron and on demand. It checks out `main` and the orphan `data` branch (into `data/`), runs the checks, commits the new observations back to `data` as `github-actions[bot]`, renders the site and deploys it to Pages.
 - `main` holds only code and configuration; humans commit there. The daily commits never touch it.
 - `.github/workflows/ci.yml` lints, type-checks (`mypy --strict`), tests, validates the source definitions and renders the site from the committed 90-day fixture history, so a broken renderer fails CI without touching a source.
-- One-time setup: push `main`, run `scripts/init_data_branch.sh`, enable Pages with source "GitHub Actions".
+
+### Limitations
+
+- One run a day on shared runners; a run can start late or be skipped. A day with no run is grey, not red.
+- Volume bands are statistical, not semantic. A holiday can look like an outage for a day.
+- Samples are small, so value checks catch new labels and gross nulls, not rare ones.
+- Alerting is the site and the status feed it publishes from the data branch; there is no push notification yet.
+
+## Layout
+
+```
+src/sourcewatch/
+├── probes/          # one module per probe kind, each returning an Observation
+├── templates/       # the site pages (Jinja)
+├── checks.py        # availability, freshness, volume, schema grading
+├── table_checks.py  # value checks through observatory
+├── incidents.py     # open after two failing runs, close on recovery
+├── store.py         # one Parquet file per day under history/, state/ for incidents and baselines
+├── site.py          # renders the pages and the JSON feeds
+├── runner.py        # one run: probe, check, store, print
+└── cli.py           # sourcewatch
+sources/             # <id>.yaml per source plus <id>.schema.json sidecars
+scripts/             # init_data_branch.sh, the one-time data-branch setup
+tests/               # recorded responses under fixtures/responses/, the 90-day fixture history under fixtures/data/, network/ for live smoke tests
+.github/workflows/   # ci.yml, daily.yml
+```
+
+Not in git on `main`: `data/` (the data-branch checkout) and `site/` (rendered output).
+
+## Outside the repo
+
+| Thing | Where | Notes |
+|---|---|---|
+| Observations | the orphan `data` branch of this repo | one Parquet per day plus incident and baseline state; written only by the daily workflow |
+| Site | GitHub Pages for this repo | rendered by the daily workflow; source set to "GitHub Actions" |
+| `SOCRATA_APP_TOKEN` | repository secret, optional | read by the 311 probe |
+| observatory | [m4dd0ck/observatory](https://github.com/m4dd0ck/observatory), pinned by git tag in `pyproject.toml` | the tag in force is recorded in hq (`~/developer/hq/repos.json`) |
+
+## Vocabulary
+
+**Observation.** What one probe saw on one run: counts, timestamps, schema fingerprint, HTTP details. Never source rows.
+
+**Outcome.** One check's grade for one source on one run: `ok`, `degraded`, `failed`, or not observed (`-`).
+
+**Incident.** Opened when the same check fails on two consecutive runs; closes itself when the source passes again.
+
+**Learning.** A volume check with fewer samples than the window needs; reported, not graded.
+
+**Drift.** A schema that differs from the accepted sidecar; stays `DRIFT` until accepted and committed.
+
+## Decisions
+
+- **2026-10-07** Only observations are stored, never rows, so the history is small and nothing from a source is republished.
+- **2026-10-07** Observations live on an orphan `data` branch written by the bot; `main` stays code and configuration.
+- **2026-10-07** This repo is never backdated: its value is that it visibly ran over time. Human commits carry real timestamps; bot commits land on `data`.
+- **2026-10-07** Thresholds are the author's judgement, written per source in YAML, so they can be argued with in a pull request.
+- **2026-10-16** An unexpected probe error is recorded as a failed observation instead of aborting the run; an incident stays open while a check is not observed.
+- **2026-10-20** Four-file skeleton.
+
+## History
+
+- **2026-10-07** Built and shipped in one day, in real time: six sources, the checks, the site, the daily workflow, v0.1.0, with observatory v0.2.0 as its first consumer.
+- **2026-10-16** v0.1.1: probe errors recorded, incident handling fixed, previous run selected by id, workflow hardening.
+- **2026-10-20** Four-file skeleton.
 
 ## Development
 
@@ -79,20 +172,14 @@ uv run pytest -m network      # live smoke test of each probe
 uv run python -m tests.make_fixture_data   # regenerate the synthetic 90-day history
 ```
 
-Tests mock HTTP with respx and fail on any request that is not mocked. Dates are injected, never read from the wall clock inside the checks.
+Tests mock HTTP with respx and fail on any request that is not mocked. Dates are injected, never read from the wall clock inside the checks. The full list is `RUNBOOK.md` §Validate; paths the docs name that never exist on `main` (`data/`, `site/`) are listed in `.doc-check-ignore`.
 
-## Adding a source
+## Pointers
 
-1. Write `sources/<id>.yaml` (see any existing one): a probe kind, a cadence, a volume band, optional observatory `table_checks`, and the request budget.
-2. If the probe kind is new, add a module under `src/sourcewatch/probes/` that returns an `Observation`, register it, and record a trimmed real response under `tests/fixtures/responses/`.
-3. Run once, then `sourcewatch accept-schema <id>` and commit the sidecar.
-
-## Limitations
-
-- One run a day on shared runners; a run can start late or be skipped. A day with no run is grey, not red.
-- Volume bands are statistical, not semantic. A holiday can look like an outage for a day.
-- Samples are small, so value checks catch new labels and gross nulls, not rare ones.
-- Alerting is the site and `status.json`; there is no push notification yet.
+- `RUNBOOK.md`: on open, on close, the daily run, adding a source, accepting drift, release, deploy, restore.
+- `CLAUDE.md`: rules for agents working here.
+- `TASK.md`: what is open.
+- `~/developer/hq/CONVENTIONS.md`: release and commit conventions across the owner's repos.
 
 ## License
 
