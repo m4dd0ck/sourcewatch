@@ -1,16 +1,16 @@
 {
- "run_id": "981bf7781b3841768d8bed71292142d1",
- "run_at": "2026-10-19T17:17:39.440235Z",
- "overall": "failed",
- "line": "1 source failed, 1 source degraded",
+ "run_id": "89cb7ae4c85746b78b94becd78c1ae2d",
+ "run_at": "2026-10-20T15:31:30.382518Z",
+ "overall": "degraded",
+ "line": "2 sources degraded",
  "sources": {
   "cfpb-complaints": {
-   "status": "failed",
-   "detail": "GET https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/ failed after 3 attempts: ReadTimeout: The read operation timed out"
+   "status": "degraded",
+   "detail": "latest 2026-10-20, 2,562 received on 2026-10-18"
   },
   "nyc-311": {
    "status": "ok",
-   "detail": "latest 2026-10-18 01:51 EDT, 10,711 on 2026-10-17"
+   "detail": "latest 2026-10-19 01:20 EDT, 11,230 on 2026-10-18"
   },
   "nyc-tlc": {
    "status": "degraded",
@@ -18,15 +18,15 @@
   },
   "open-meteo-archive": {
    "status": "ok",
-   "detail": "archive through 2026-10-19, 24 hourly rows on 2026-10-18"
+   "detail": "archive through 2026-10-20, 24 hourly rows on 2026-10-19"
   },
   "treasury-dts": {
    "status": "ok",
-   "detail": "DTS record_date 2026-10-15 (Thu), 4 rows"
+   "detail": "DTS record_date 2026-10-16 (Fri), 4 rows"
   },
   "usgs-earthquakes": {
    "status": "ok",
-   "detail": "newest event 7 min ago, 24h count 197"
+   "detail": "newest event 11 min ago, 24h count 209"
   }
  }
 }
