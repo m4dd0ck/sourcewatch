@@ -43,8 +43,9 @@ uv sync
 uv run sourcewatch run --data-dir data           # ~25 s, 13 HTTP requests in total
 uv run sourcewatch site --data-dir data --out site
 uv run sourcewatch backfill --data-dir data      # optional: seed volume baselines
-uv run sourcewatch accept-schema nyc-tlc          # after a source legitimately changes shape
 ```
+
+When a source legitimately changes shape: `RUNBOOK.md` §When a source shows DRIFT.
 
 `SOCRATA_APP_TOKEN` is optional; without it the 311 probe runs anonymously and is throttled per IP, which three requests a day never reaches.
 
@@ -133,7 +134,7 @@ Not in git on `main`: `data/` (the data-branch checkout) and `site/` (rendered o
 | Observations | the orphan `data` branch of this repo | one Parquet per day plus incident and baseline state; written only by the daily workflow |
 | Site | GitHub Pages for this repo | rendered by the daily workflow; source set to "GitHub Actions" |
 | `SOCRATA_APP_TOKEN` | repository secret, optional | read by the 311 probe |
-| observatory | [m4dd0ck/observatory](https://github.com/m4dd0ck/observatory), pinned by git tag in `pyproject.toml` | the tag in force is recorded in hq (`~/developer/hq/repos.json`) |
+| observatory | [m4dd0ck/observatory](https://github.com/m4dd0ck/observatory), pinned by git tag in `pyproject.toml` | the pin moves when observatory releases |
 
 ## Vocabulary
 
@@ -151,7 +152,7 @@ Not in git on `main`: `data/` (the data-branch checkout) and `site/` (rendered o
 
 - **2026-10-07** Only observations are stored, never rows, so the history is small and nothing from a source is republished.
 - **2026-10-07** Observations live on an orphan `data` branch written by the bot; `main` stays code and configuration.
-- **2026-10-07** This repo is never backdated: its value is that it visibly ran over time. Human commits carry real timestamps; bot commits land on `data`.
+- **2026-10-07** The history is the product: the bot's daily commits land on `data` with their real timestamps; humans commit code to `main`.
 - **2026-10-07** Thresholds are the author's judgement, written per source in YAML, so they can be argued with in a pull request.
 - **2026-10-16** An unexpected probe error is recorded as a failed observation instead of aborting the run; an incident stays open while a check is not observed.
 - **2026-10-20** Four-file skeleton.
@@ -179,7 +180,6 @@ Tests mock HTTP with respx and fail on any request that is not mocked. Dates are
 - `RUNBOOK.md`: on open, on close, the daily run, adding a source, accepting drift, release, deploy, restore.
 - `CLAUDE.md`: rules for agents working here.
 - `TASK.md`: what is open.
-- `~/developer/hq/CONVENTIONS.md`: release and commit conventions across the owner's repos.
 
 ## License
 

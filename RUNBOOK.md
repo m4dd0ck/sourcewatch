@@ -48,16 +48,13 @@ it now: `gh workflow run daily.yml`. A day with no run is grey on the strip, not
 
 ## Release
 
-Conventions in `~/developer/hq/CONVENTIONS.md` §Versioning.
-
 1. Bump `version` in `pyproject.toml` and `__version__` in `src/sourcewatch/__init__.py` to the
    same value; `uv lock`.
 2. Commit `chore: Release vX.Y.Z`, then `git tag -a vX.Y.Z -m "vX.Y.Z"` and
    `git push origin main --tags`.
 3. `gh release create vX.Y.Z --title "vX.Y.Z" --notes "<what changed>"` with the compare link
    to the previous tag, marked latest.
-4. CI must be green on the tagged commit, and the next daily run green after it. Real
-   timestamps only: this repo is never backdated.
+4. CI must be green on the tagged commit, and the next daily run green after it.
 
 ## Deploy
 
@@ -67,7 +64,7 @@ change to the observatory pin is a `chore(deps)` commit with `uv lock`, then the
 
 ## Restore on a new machine
 
-1. Clone `git@github.com:m4dd0ck/sourcewatch.git`; `uv sync`; `uv run pytest`.
+1. Clone `https://github.com/m4dd0ck/sourcewatch.git`; `uv sync`; `uv run pytest`.
 2. The live history is the `data` branch: `git worktree add data data` (or a second clone) to
    render the real site locally with `uv run sourcewatch site --data-dir data --out site`.
 3. Nothing else is needed locally. For a fresh GitHub repo: push `main`, run
@@ -88,5 +85,4 @@ uv run ruff check . && uv run ruff format --check . && uv run mypy
 uv run pytest
 uv run sourcewatch validate-config
 uv run sourcewatch site --data-dir tests/fixtures/data --out site --at 2026-10-07T11:03:41Z
-python3 ~/.claude/scripts/doc-check.py --repo .
 ```
