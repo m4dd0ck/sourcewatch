@@ -1,16 +1,16 @@
 {
- "run_id": "d51faee9114648a89a89cc3636045aa4",
- "run_at": "2026-11-08T16:53:39.607980Z",
- "overall": "failed",
- "line": "1 source failed",
+ "run_id": "aa138e26cc5e42adb3c03d91e5e8aad1",
+ "run_at": "2026-11-09T21:14:56.670111Z",
+ "overall": "degraded",
+ "line": "2 sources degraded",
  "sources": {
   "cfpb-complaints": {
-   "status": "ok",
-   "detail": "latest 2026-11-08, 18,223 received on 2026-11-06"
+   "status": "degraded",
+   "detail": "latest 2026-11-09, 6,533 received on 2026-11-07"
   },
   "nyc-311": {
-   "status": "failed",
-   "detail": "GET https://data.cityofnewyork.us/resource/erm2-nwe9.json failed after 3 attempts: ReadTimeout: The read operation timed out"
+   "status": "degraded",
+   "detail": "latest 2026-11-04 02:05 EST, 0 on 2026-11-07"
   },
   "nyc-tlc": {
    "status": "ok",
@@ -18,15 +18,15 @@
   },
   "open-meteo-archive": {
    "status": "ok",
-   "detail": "archive through 2026-11-08, 24 hourly rows on 2026-11-07"
+   "detail": "archive through 2026-11-09, 24 hourly rows on 2026-11-08"
   },
   "treasury-dts": {
    "status": "ok",
-   "detail": "DTS record_date 2026-11-05 (Thu), 4 rows"
+   "detail": "DTS record_date 2026-11-06 (Fri), 4 rows"
   },
   "usgs-earthquakes": {
    "status": "ok",
-   "detail": "newest event 4 min ago, 24h count 194"
+   "detail": "newest event 29 min ago, 24h count 199"
   }
  }
 }
