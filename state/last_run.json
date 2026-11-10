@@ -1,16 +1,16 @@
 {
- "run_id": "aa138e26cc5e42adb3c03d91e5e8aad1",
- "run_at": "2026-11-09T21:14:56.670111Z",
+ "run_id": "f3cad76b078d41d8ae68a7a212d7788c",
+ "run_at": "2026-11-10T18:24:21.969702Z",
  "overall": "degraded",
- "line": "2 sources degraded",
+ "line": "1 source degraded",
  "sources": {
   "cfpb-complaints": {
    "status": "degraded",
-   "detail": "latest 2026-11-09, 6,533 received on 2026-11-07"
+   "detail": "latest 2026-11-10, 2,790 received on 2026-11-08"
   },
   "nyc-311": {
-   "status": "degraded",
-   "detail": "latest 2026-11-04 02:05 EST, 0 on 2026-11-07"
+   "status": "ok",
+   "detail": "latest 2026-11-09 02:06 EST, 9,895 on 2026-11-08"
   },
   "nyc-tlc": {
    "status": "ok",
@@ -18,7 +18,7 @@
   },
   "open-meteo-archive": {
    "status": "ok",
-   "detail": "archive through 2026-11-09, 24 hourly rows on 2026-11-08"
+   "detail": "archive through 2026-11-10, 24 hourly rows on 2026-11-09"
   },
   "treasury-dts": {
    "status": "ok",
@@ -26,7 +26,7 @@
   },
   "usgs-earthquakes": {
    "status": "ok",
-   "detail": "newest event 29 min ago, 24h count 199"
+   "detail": "newest event 34 min ago, 24h count 206"
   }
  }
 }
